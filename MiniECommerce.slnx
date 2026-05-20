@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/MiniECommerce.Domain/MiniECommerce.Domain.csproj" />
+        <Project Path="src/MiniECommerce.Application/MiniECommerce.Application.csproj" />
+        <Project Path="src/MiniECommerce.EntityFrameworkCore/MiniECommerce.EntityFrameworkCore.csproj" />
+        <Project Path="src/MiniECommerce.Domain.Shared/MiniECommerce.Domain.Shared.csproj" />
+        <Project Path="src/MiniECommerce.Application.Contracts/MiniECommerce.Application.Contracts.csproj" />
+        <Project Path="src/MiniECommerce.HttpApi/MiniECommerce.HttpApi.csproj" />
+        <Project Path="src/MiniECommerce.HttpApi.Client/MiniECommerce.HttpApi.Client.csproj" />
+        <Project Path="src/MiniECommerce.HttpApi.Host/MiniECommerce.HttpApi.Host.csproj" />
+        <Project Path="src/MiniECommerce.DbMigrator/MiniECommerce.DbMigrator.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/MiniECommerce.Application.Tests/MiniECommerce.Application.Tests.csproj" />
+        <Project Path="test/MiniECommerce.EntityFrameworkCore.Tests/MiniECommerce.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/MiniECommerce.TestBase/MiniECommerce.TestBase.csproj" />
+        <Project Path="test/MiniECommerce.Domain.Tests/MiniECommerce.Domain.Tests.csproj" />
+        <Project Path="test/MiniECommerce.HttpApi.Client.ConsoleTestApp/MiniECommerce.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>
