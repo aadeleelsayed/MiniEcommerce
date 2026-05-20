@@ -29,7 +29,7 @@ namespace MiniECommerce.Products;
         SetStockQuantity(stockQuantity);
     }
 
-    private void SetStockQuantity(int stockQuantity)
+    public void SetStockQuantity(int stockQuantity)
     {
         if (stockQuantity < 0)
         {
@@ -39,7 +39,7 @@ namespace MiniECommerce.Products;
         StockQuantity = stockQuantity;
     }
 
-    private void SetPrice(decimal price)
+    public void SetPrice(decimal price)
     {
         if(price <= 0)
         {
