@@ -13,6 +13,9 @@ using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
+using MiniECommerce.Categories;
+using MiniECommerce.Products;
+using MiniECommerce.Orders;
 
 namespace MiniECommerce.EntityFrameworkCore;
 
@@ -24,7 +27,10 @@ public class MiniECommerceDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
-    public DbSet<Book> Books { get; set; }
+    public DbSet<Category> Categories{ get; set; }
+    public DbSet<Product> Products{ get; set; }
+    public DbSet<Order> Orders{ get; set; }
+    public DbSet<OrderItem> OrderItem { get; set; }
 
     #region Entities from the modules
 
@@ -71,15 +77,37 @@ public class MiniECommerceDbContext :
         builder.ConfigureIdentity();
         builder.ConfigureOpenIddict();
         builder.ConfigureBlobStoring();
-        
-        builder.Entity<Book>(b =>
+
+        builder.Entity<Category>(b =>
         {
-            b.ToTable(MiniECommerceConsts.DbTablePrefix + "Books",
-                MiniECommerceConsts.DbSchema);
-            b.ConfigureByConvention(); //auto configure for the base class props
+            b.ToTable(MiniECommerceConsts.DbTablePrefix + "Categories", MiniECommerceConsts.DbSchema);
+            b.ConfigureByConvention();
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
         });
-        
+
+        builder.Entity<Product>(b =>
+        {
+            b.ToTable(MiniECommerceConsts.DbTablePrefix + "Products", MiniECommerceConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.NameAr).IsRequired().HasMaxLength(128);
+            b.Property(x => x.NameEn).IsRequired().HasMaxLength(128);
+            b.Property(x => x.Price).HasColumnType("decimal(18,2)");
+        });
+
+        builder.Entity<Order>(o =>
+        {
+            o.ToTable(MiniECommerceConsts.DbTablePrefix + "Orders", MiniECommerceConsts.DbSchema);
+            o.ConfigureByConvention();
+            o.HasMany(x=> x.Items).WithOne().HasForeignKey("OrderId").IsRequired();
+        });
+        builder.Entity<OrderItem>(o =>
+        {
+            o.ToTable(MiniECommerceConsts.DbTablePrefix + "OrderItems", MiniECommerceConsts.DbSchema);
+            o.ConfigureByConvention();
+            o.Property(x => x.UnitPrice).HasColumnType("decimal(18,2)");
+    });
+
+
         /* Configure your own tables/entities inside here */
 
         //builder.Entity<YourEntity>(b =>
