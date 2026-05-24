@@ -8,8 +8,8 @@ namespace MiniECommerce.Categories;
 
 public class Category : FullAuditedAggregateRoot<Guid>
 {
-    public string Name { get; private set; }
-    public Guid? ParentId { get; private set; }
+    public string Name { get; set; }
+    public Guid? ParentId { get; set; }
     private Category() { }
 
     public Category(Guid id, string name, Guid? parentId = null)

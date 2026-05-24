@@ -4,8 +4,9 @@ using System.Text;
 using Volo.Abp.Domain.Entities;
 
 namespace MiniECommerce.Orders;
-    public class OrderItem :Entity<Guid>
-    {
+
+public class OrderItem : Entity<Guid>
+{
     public Guid ProductId { get; private set; }
     public int Quantity { get; private set; }
 

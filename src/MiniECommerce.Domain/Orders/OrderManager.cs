@@ -20,6 +20,13 @@ public class OrderManager : DomainService
     public async Task AddItemToOrderAsync (Order order, Guid productId, int quantity)
     {
         var product = await _productRepository.GetAsync(productId);
+        
+        if(product == null)
+        {
+            throw new BusinessException("Product is not exist!")
+                .WithData("ProvidedProductId", productId);
+        }
+
         if (product.StockQuantity < quantity)
         {
             throw new BusinessException("There is no enough stock!")
@@ -27,7 +34,7 @@ public class OrderManager : DomainService
 
         }
         product.SetStockQuantity(product.StockQuantity - quantity);
-        order.Items.Add(new OrderItem(GuidGenerator.Create(), productId, quantity, product.Price));
+        order.AddItem(GuidGenerator.Create(), productId, product.Price, quantity);
     }
 
     

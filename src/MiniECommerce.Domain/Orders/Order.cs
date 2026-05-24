@@ -21,7 +21,13 @@ namespace MiniECommerce.Orders;
             CustomerId = customerId;
             Items = new Collection<OrderItem>();
         }
-        public void AddItem(Guid itemId,Guid productId, decimal unitPrice, int quantity)
+
+    public Order(Guid id) : base(id)
+    {
+        Items = new Collection<OrderItem>();
+    }
+
+    public void AddItem(Guid itemId,Guid productId, decimal unitPrice, int quantity)
         {
         if (quantity <= 0)
         {

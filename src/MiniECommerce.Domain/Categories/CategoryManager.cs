@@ -18,7 +18,7 @@ public class CategoryManager : DomainService
 
     public async Task<Category> CreateAsync(string name, Guid? parentId)
     {
-        if (!await _categoryRepository.AnyAsync(c => c.Name == name))
+        if (await _categoryRepository.AnyAsync(c => c.Name == name))
             throw new BusinessException("The category name is already existed!")
                 .WithData("ProvidedCategoryName", name);
         if (parentId.HasValue && !await _categoryRepository.AnyAsync(c => c.Id == parentId.Value))
