@@ -1,67 +1,45 @@
-# MiniECommerce
+# 🛒 Mini E-Commerce Backend (ABP Framework)
 
-## About this solution
+This is a robust, purely backend e-commerce application built using the [ABP Framework](https://abp.io/) (v10.0) following strict Domain-Driven Design (DDD) principles. 
 
-This is a layered startup solution based on [Domain Driven Design (DDD)](https://abp.io/docs/latest/framework/architecture/domain-driven-design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/solution-templates/layered-web-application) documentation for more info.
+## 🚀 Features
+* **Layered Architecture:** Built using ABP's standard layered monolith template (Backend-only / No UI).
+* **Domain-Driven Design:** Rich domain models with encapsulated business rules (e.g., stock validation, price validation).
+* **Modern Mapping:** Utilizes **Mapperly** (C# Source Generators) for high-performance Outbound DTO mapping.
+* **Role-Based Authorization:** Strict API endpoint protection using OpenIddict and JWT bearer tokens.
+* **Soft Delete & Auditing:** Fully automated via ABP's `FullAuditedAggregateRoot`.
 
-### Pre-requirements
+---
 
-* [.NET10.0+ SDK](https://dotnet.microsoft.com/download/dotnet)
-* [Node v18 or 20](https://nodejs.org/en)
+## 🛠️ How to Run the Project
 
-### Configurations
+### Prerequisites
+* [.NET SDK](https://dotnet.microsoft.com/download) (Version compatible with ABP 10)
+* SQL Server (LocalDB or a full instance)
+* ABP CLI installed (`dotnet tool install -g Volo.Abp.Cli`)
 
-The solution comes with a default configuration that works out of the box. However, you may consider to change the following configuration before running your solution:
+### Step-by-Step Setup
+1. **Configure the Database Connection:**
+   Open `appsettings.json` in **both** the `MiniECommerce.DbMigrator` and `MiniECommerce.HttpApi.Host` projects. Ensure the `Default` connection string points to your local SQL Server instance.
+2. **Seed the Database:**
+   Set `MiniECommerce.DbMigrator` as your startup project and run it. This will automatically create the database schema, apply all EF Core migrations, and seed the default roles and users.
+3. **Install Frontend Dependencies (For Swagger UI):**
+   Open a terminal in the `src/MiniECommerce.HttpApi.Host` folder and run:
+   ```bash
+   abp install-libs
+4. Run the API:
+Set MiniECommerce.HttpApi.Host as your startup project and run the application. The browser will automatically open the Swagger UI at https://localhost:443XX/swagger.
 
+## 🗄️ How to Apply Migrations
+If you make changes to the Domain Entities (e.g., adding a new property to Product), you need to generate a new database migration.
 
-### Before running the application
+Using Package Manager Console (Visual Studio):
 
-* Run `abp install-libs` command on your solution folder to install client-side package dependencies. This step is automatically done when you create a new solution, if you didn't especially disabled it. However, you should run it yourself if you have first cloned this solution from your source control, or added a new client-side package dependency to your solution.
-* Run `MiniECommerce.DbMigrator` to create the initial database. This step is also automatically done when you create a new solution, if you didn't especially disabled it. This should be done in the first run. It is also needed if a new database migration is added to the solution later.
+1. **Set MiniECommerce.EntityFrameworkCore as the Default Project in the console.**
 
-#### Generating a Signing Certificate
+2. **Set MiniECommerce.HttpApi.Host as the Startup Project in the Solution Explorer.**
 
-In the production environment, you need to use a production signing certificate. ABP Framework sets up signing and encryption certificates in your application and expects an `openiddict.pfx` file in your application.
+3. **Run the command:**
+Add-Migration "Your_Migration_Name"
 
-To generate a signing certificate, you can use the following command:
-
-```bash
-dotnet dev-certs https -v -ep openiddict.pfx -p 4a69c7f5-8966-4bef-a191-99eb5009f015
-```
-
-> `4a69c7f5-8966-4bef-a191-99eb5009f015` is the password of the certificate, you can change it to any password you want.
-
-It is recommended to use **two** RSA certificates, distinct from the certificate(s) used for HTTPS: one for encryption, one for signing.
-
-For more information, please refer to: [OpenIddict Certificate Configuration](https://documentation.openiddict.com/configuration/encryption-and-signing-credentials.html#registering-a-certificate-recommended-for-production-ready-scenarios)
-
-> Also, see the [Configuring OpenIddict](https://abp.io/docs/latest/Deployment/Configuring-OpenIddict#production-environment) documentation for more information.
-
-### Solution structure
-
-This is a layered monolith application that consists of the following applications:
-
-* `MiniECommerce.DbMigrator`: A console application which applies the migrations and also seeds the initial data. It is useful on development as well as on production environment.
-* `MiniECommerce.HttpApi.Host`: ASP.NET Core API application that is used to expose the APIs to the clients.
-
-#### Test Projects
-
-The `test` folder contains the following test projects:
-
-* `MiniECommerce.Application.Tests`: Application layer tests.
-* `MiniECommerce.Domain.Tests`: Domain layer tests.
-* `MiniECommerce.EntityFrameworkCore.Tests`: Entity Framework Core integration tests.
-
-
-
-
-## Deploying the application
-
-Deploying an ABP application follows the same process as deploying any .NET or ASP.NET Core application. However, there are important considerations to keep in mind. For detailed guidance, refer to ABP's [deployment documentation](https://abp.io/docs/latest/Deployment/Index).
-
-### Additional resources
-
-You can see the following resources to learn more about your solution and the ABP Framework:
-
-* [Web Application Development Tutorial](https://abp.io/docs/latest/tutorials/book-store/part-1)
-* [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index)
+4. **To apply the migration to your database, simply run the MiniECommerce.DbMigrator project again.**
